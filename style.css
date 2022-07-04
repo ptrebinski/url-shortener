@@ -245,6 +245,30 @@ button {
   border-radius: 5px;
 }
 
+.shortener__input--error {
+  border: 3px solid var(--color-error);
+}
+
+.shortener__input::placeholder {
+  color: var(--color-text-light);
+}
+
+.shortener__input--error::placeholder {
+  color: var(--color-error);
+  opacity: 0.5;
+}
+
+.shortener__error-msg {
+  font-size: 0.75rem;
+  margin-top: 0.5em;
+  color: var(--color-error);
+  display: none;
+}
+
+.shortener__input--error + .shortener__error-msg {
+  display: block;
+}
+
 .shortener__btn {
   font-size: 1.125rem;
 }

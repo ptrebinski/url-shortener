@@ -12,6 +12,7 @@
     />
     <link rel="stylesheet" href="style.css" />
     <script src="js/menu.js" defer></script>
+    <script src="js/shortener.js" defer></script>
     <title>Shortly - URL Shortener</title>
   </head>
   <body>
@@ -62,9 +63,15 @@
 
     <main class="main">
       <div class="shortener container">
-        <form class="shortener__form">
+        <form id="shortener-form" class="shortener__form">
           <div class="input-container">
-            <input type="text" class="shortener__input" placeholder="Shorten a link here..." />
+            <input
+              id="link-input"
+              class="shortener__input"
+              type="text"
+              placeholder="Shorten a link here..."
+            />
+            <p id="error-message" class="shortener__error-msg"></p>
           </div>
           <button type="submit" class="shortener__btn btn">Shorten It!</button>
         </form>
