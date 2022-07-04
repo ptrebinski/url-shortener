@@ -502,10 +502,19 @@ button {
 
   .input-container {
     flex: 1;
+    position: relative;
   }
 
   .shortener__input {
     padding: 0 2rem;
+  }
+
+  .shortener__error-msg {
+    margin: 0;
+    position: absolute;
+    font-size: 1rem;
+    left: 0;
+    bottom: -2em;
   }
 
   .shortener__btn {
