@@ -1,6 +1,7 @@
 const form = document.querySelector('#shortener-form');
 const linkInput = document.querySelector('#link-input');
 const errorMessageElement = document.querySelector('#error-message');
+const linksList = document.querySelector('#links-list');
 const errorClassName = 'shortener__input--error';
 
 const shortenLink = async (longLink) => {
@@ -32,6 +33,26 @@ const hideError = () => {
   errorMessageElement.textContent = '';
 };
 
+const createLinkElement = ({ originalLink, shortLink }) => {
+  const link = document.createElement('li');
+  link.className = 'shortener__link-container';
+
+  link.innerHTML = `
+      <span class="shortener__link shortener__link--long"
+      >${originalLink}</span>
+      
+      <a href="${shortLink}" class="shortener__link shortener__link--short"
+      >${shortLink}</a>
+    `;
+
+  return link;
+};
+
+const renderLink = (linkData) => {
+  const linkElement = createLinkElement(linkData);
+  linksList.appendChild(linkElement);
+};
+
 const handleSubmit = async (e) => {
   e.preventDefault();
   hideError();
@@ -39,7 +60,8 @@ const handleSubmit = async (e) => {
 
   try {
     const linkData = await shortenLink(link);
-    prompt('Link generated!', linkData.short_link);
+    const { full_short_link: shortLink, original_link: originalLink } = linkData;
+    renderLink({ shortLink, originalLink });
   } catch (error) {
     showError(error.message);
   }
