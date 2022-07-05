@@ -20,7 +20,10 @@ const shortenLink = async (longLink) => {
     }
   }
 
-  return data.result;
+  return {
+    shortLink: data.result.full_short_link,
+    originalLink: data.result.original_link,
+  };
 };
 
 const showError = (errorMessage) => {
@@ -53,6 +56,17 @@ const renderLink = (linkData) => {
   linksList.appendChild(linkElement);
 };
 
+const getLinks = () => {
+  const links = JSON.parse(localStorage.getItem('links'));
+
+  return links || [];
+};
+
+const saveLink = (newLink) => {
+  const links = getLinks();
+  localStorage.setItem('links', JSON.stringify([...links, newLink]));
+};
+
 const handleSubmit = async (e) => {
   e.preventDefault();
   hideError();
@@ -60,11 +74,15 @@ const handleSubmit = async (e) => {
 
   try {
     const linkData = await shortenLink(link);
-    const { full_short_link: shortLink, original_link: originalLink } = linkData;
-    renderLink({ shortLink, originalLink });
+    saveLink(linkData);
+    renderLink(linkData);
   } catch (error) {
     showError(error.message);
   }
 };
 
+document.addEventListener('DOMContentLoaded', () => {
+  const links = getLinks();
+  links.forEach(renderLink);
+});
 form.addEventListener('submit', handleSubmit);
